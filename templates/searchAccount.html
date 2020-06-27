@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+<br><br><br><br><br><br><br>
+    <div class="content-section">
+        <form method="POST" action="/search_account">
+            <label>enter the SsnId  </label>
+            <input type="text" name="ssnid">
+            <input type="submit" value="Search">
+        </form>
+         <form method="POST" action="/search_account">
+            <label>enter the account number   </label>
+            <input type="text" name="aid" >
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    
+{% endblock content %}

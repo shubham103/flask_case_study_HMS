@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Account Status</legend>
+
+                <div class="form-group">
+                    
+                        <label for="table"> 
+                        
+                                <table border=1 width="30%">
+                                    <tr>
+                                   
+                                    <th>Customer ID</th>
+                                    <th>Account ID</th>
+                                    <th>Account Type</th>
+                                    <th>Status</th>
+                                    <th>Message</th>
+                                    <th>Last Updated</th>
+                                   
+                                    </tr>
+                                    {% for i in accountData %}
+                                    <tr>
+                                    <td>{{ i.Customer_ID }}</td>
+                                    <td>{{ i.Account_ID }}</td>
+                                    <td>{{ i.Account_Type }}</td>
+                                    <td>{{ i.Status }}</td>
+                                    <td>{{ i.Message }}</td>
+                                    <td>{{ i.Last_Updated }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </label>
+                    </div>
+
+                   
+            </fieldset>
+        </div>
+            
+{% endblock content %}

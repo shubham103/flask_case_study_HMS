@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Customer Status</legend>
+
+                <div class="form-group">
+                    
+                        <label for="table"> 
+                        
+                                <table border=1 width="30%">
+                                    <tr>
+                                   
+                                    <th>Customer SSN ID</th>
+                                    <th>Customer ID</th>
+                                    <th>Status</th>
+                                    <th>Last Updated</th>
+                                    <th>Message</th>
+                                   
+                                    </tr>
+                                    {% for i in customerData %}
+                                    <tr>
+                                    <td>{{ i.SSN_ID }}</td>
+                                    <td>{{ i.Customer_ID }}</td>
+                                    <td>{{ i.Status }}</td>
+                                    <td>{{ i.Last_Updated }}</td>
+                                    <td>{{ i.Message }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </label>
+                    </div>
+
+                   
+            </fieldset>
+        </div>
+            
+{% endblock content %}

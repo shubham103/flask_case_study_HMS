@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Account details</legend>
+
+                <div class="form-group">
+                    
+                        <label for="table"> 
+                        
+                                <table border=1 width="30%">
+                                    <tr>
+                                
+                                   
+                                    <th>Customer_ID</th>
+                                    <th>Account_ID</th>
+                                    <th>Account_type</th>
+                                    <th>Balance</th>
+                                    <th>CR_date</th>
+                                    <th>CR_last_date</th>
+                                    <th>Duration</th>
+                                  
+
+                                   
+                                    </tr>
+                                
+                                    <tr>
+                                    <td>{{ accountData.Customer_ID}}</td>
+                                    <td>{{ accountData.Account_ID }}</td>
+                                    <td>{{ accountData.Account_Type }}</td>
+                                    <td>{{ accountData.Balance}}</td>
+                                    <td>{{ accountData.CR_date}}</td>
+                                    <td>{{ accountData.CR_last_date}}</td>
+                                    <td>{{ accountData.Duration}}</td>
+                                    </tr>
+                                   
+                                </table>
+                            </label>
+                    </div>
+
+                   
+            </fieldset>
+        </div>
+            
+{% endblock content %}
