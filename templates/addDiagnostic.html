@@ -1,0 +1,42 @@
+    {% extends "layout.html" %}
+{% block content %}
+
+
+
+<div class="w3-container w3-display-container">
+ 
+  
+  <div class="w3-card-4 w3-white w3-display-topmiddle" style="width: 50%;">
+    <div class="w3-container w3-center w3-green">
+      <h2>Enter Diagnostic Details</h2>
+      </div>
+             
+      <form class="w3-container w3-card-4 w3-light-grey" action="/addDiagnostic" method="POST">
+
+          
+          <p> <span class="w3-text-red">* Mandatory</span> </p>
+
+         
+           <p>
+          <label>Diagnostic Name</label>
+          <input class="w3-input w3-border w3-round" name="patientName" required="true" type="text"></p>
+         
+
+          <input class="w3-green w3-button w3-round " type="submit"  name="submit" value="Add Diagnostic"> 
+     <br/>  <br/>
+        </form>
+      
+  
+
+        
+     </div>
+
+</div>
+
+
+
+
+
+
+
+{% endblock content %}

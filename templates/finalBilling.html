@@ -1,0 +1,97 @@
+ 
+{% extends "layout.html" %}
+
+
+{% block content %}
+
+<div class="w3-container w3-tiny">
+  <h3 class="w3-center">Patient Billing</h3>
+
+  <table class="w3-table-all w3-hoverable">
+    <thead>
+      <tr class="w3-green">
+        <th>Patiend ID</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>DOJ</th>
+        <th>Type of Room</th>
+      </tr>
+    </thead>
+      <tr>
+          <td>{{ data1['a'] }}</td>
+            <td>{{ data1['a'] }}</td>
+             <td>{{ data1['a'] }}</td>
+             <td>{{ data1['a'] }}</td>
+             <td>{{ data1['a'] }}</td>
+             <td>{{ data1['a'] }}</td>
+        </tr>
+ </table>
+ <h4> No. of days : {{ days}}                  Billing for room : {{ room_rent }}</h4>
+</div>
+
+<div class="w3-container w3-tiny">
+  <h3 class="w3-center">Pharmacy Charges </h3>
+  <table class="w3-table-all w3-hoverable">
+    <thead>
+      <tr class="w3-green">
+        
+        <th>Medicine</th>
+        <th>Quantity</th>
+        <th>Rate</th>
+        <th>Amount</th>
+        
+      </tr>
+    </thead>
+      {% for data in data2 %}
+              
+              <tr>
+                                       
+                 
+                  <td>{{ data['a'] }}</td>
+                  <td>{{ data['a'] }}</td>
+                  <td>{{ data['a'] }}</td>
+                  <td>{{ data['a'] }}</td>
+
+              </tr>
+
+      {% endfor %}
+ </table>
+ <h4> Billing for pharmacy : {{ pharmacy_bill }}</h4>
+</div>
+
+<div class="w3-container w3-tiny">
+  <h3 class="w3-center">Diagnostic charges</h3>
+
+  <table class="w3-table-all w3-hoverable">
+    <thead>
+      <tr class="w3-green">
+        <th>Medicine</th>
+        <th>Quantity</th>
+        <th>Rate</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+      {% for data in data3 %}
+              
+              <tr>
+                                       
+                  
+                  <td>{{ data['a'] }}</td>
+                  <td>{{ data['a'] }}</td>
+                  <td>{{ data['a'] }}</td>
+                  <td>{{ data['a'] }}</td>
+
+              </tr>
+
+      {% endfor %}
+      <h4> Billing for diagnostic : {{ diagnostic_bill }}</h4>
+ </table>
+</div>
+<br/>
+<form action="" method="POST" >
+	<input class="w3-green w3-button w3-round " type="submit"  name="submit" value="Confirm">
+	<label> Grant Totoal : {{ grant_total }}</label> 
+</form>
+
+{% endblock content %}

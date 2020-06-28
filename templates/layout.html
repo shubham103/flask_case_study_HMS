@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>HMS</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+
+<body class="w3-pale-yellow">
+
+<!-- Links (sit on top) -->s
+<div class="w3-top w3-row w3-large">
+  
+  <div class="w3-bar w3-light-grey">
+  <a href="/" class="w3-bar-item w3-button w3-col s2">Home</a>
+        <div class="w3-dropdown-hover w3-col s2">
+          <button class="w3-button">Patient</button>
+          <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <a href="/create_patient" class="w3-bar-item w3-button">Create patient</a>
+            <a href="/update_patient" class="w3-bar-item w3-button">Update patient</a>
+            <a href="/delete_patient" class="w3-bar-item w3-button">Delete patient</a>
+            <a href="/view_all_patient" class="w3-bar-item w3-button">View All patient</a>
+            <a href="/search_patient" class="w3-bar-item w3-button">Search patient</a>
+            <a href="/billing" class="w3-bar-item w3-button">Patient Billing</a>
+          </div>
+        </div>
+         <div class="w3-dropdown-hover w3-col s2">
+          <button class="w3-button">Pharmacy</button>
+          <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <a href="/get_patient_medicine_details" class="w3-bar-item w3-button">Get Patient Details</a>
+            
+          </div>
+        </div>
+         
+
+         <div class="w3-dropdown-hover w3-col s2">
+          <button class="w3-button">Diagnostics</button>
+          <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <a href="/get_patient_dignostic_details" class="w3-bar-item w3-button">Get Patient Details</a>
+          </div>
+        </div>
+          {% if 'userId' in session %}
+           <a class="w3-bar-item w3-button w3-col s2" href="{{ url_for('login') }}">Logout</a>
+        {% else %}
+           <a class="w3-bar-item w3-button w3-col s2" href="{{ url_for('login') }}">Login</a>
+        {% endif %}   
+          <a href="#" class="w3-bar-item w3-button w3-col s2">UserID:{{ session['userId'] }}</a>
+</div>
+
+  
+  
+  </div>
+</div>
+
+<!-- Content -->
+<div class="w3-content " style="max-width:1100px;margin-top:50px;margin-bottom:80px">
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">
+                      {{ message }}
+                  </div>
+                {% endfor %}
+            {% endif %}
+    {% endwith %}
+  
+
+  {% block content %}
+
+
+  {% endblock %}
+
+  
+
+
+
+</div>
+</body>
+</html>
