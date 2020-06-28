@@ -1,0 +1,29 @@
+1. isUserExist(userId, password) --> True/False
+
+2. isPatientSsnidExist(ssnid) --> True/False
+
+3. patientRegistration(ssnid, name, age, admission, bed, address, city, state) --> [True," "]/[False, "error message"]
+
+4. getPatientSsnidDetails(ssnid) --> [{ list ya tuple ke andar dict return kar}]]
+
+5. deletePatient(ssnid) --> [True," "]/[False, "error message"]
+
+6. getPatientStatus() --> All the data from Patient Table. Format=[True, data] / [False, "error message"]
+
+7. patient(ssnid) --> [True, data]/[False, "error message"]
+
+8. isMedicineAvailable(mname, quantity) --> First check the quantity passed is greater then table quantity then return True/False
+
+9. issueMedicine(ssnid, mname, quantity) --> Update quantity in Medicine table and insert data in Patient with medicine table and then retrun [True," "]/[False, "error message"]
+
+10. getPatientMedicineDetails(ssnid) --> [{ list ya tuple ke andar dict return kar}]
+
+11. getMedicineDetails() --> [{ list ya tuple ke andar dict return kar}]
+
+12. getDiagnosticsDetails() --> [{ list ya tuple ke andar dict return kar}]
+
+13. isDiagnosticsAvailable(dname, amount) --> True/False
+
+14. addDiagnostics(ssnid, dname, amount) --> insert data diagnostic with patient table and return [True," "]/[False, "error message"]
+
+15. dischargePatient(ssnid) --> change the status of patient to 'Discharged' and return [True," "]/[False, "error message"]
