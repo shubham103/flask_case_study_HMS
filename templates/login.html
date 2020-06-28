@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+<div class="w3-container w3-display-container">
+ 
+  
+  <div class="w3-card-4 w3-white w3-display-topmiddle" style="width: 50%;">
+    <div class="w3-container w3-center w3-green">
+      <h2>Please Enter your credentials</h2>
+    </div>
+
+    <form class="w3-container w3-center" action="" method="POST">
+      <p>
+      <input class="w3-input" type="text" name="userID">
+      <label>UserID</label></p>
+      <p>     
+      <input class="w3-input" type="password" name="password">
+      <label>Password</label></p>
+      <input class="w3-green w3-button w3-round w3-center" type="submit" name="submit" value="Login"> 
+    </form>
+    <br>
+  </div>
+</div>
+
+{% endblock content %}
