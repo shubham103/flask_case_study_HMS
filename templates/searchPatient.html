@@ -1,0 +1,80 @@
+
+
+
+
+{% extends "layout.html" %}
+{% block content %}
+
+
+
+
+<div class="w3-container w3-display-container">
+ 
+  
+  <div class="w3-card-4 w3-white w3-display-topmiddle" style="width: 50%;">
+    <div class="w3-container w3-center w3-green">
+     	<h2>View Patient Details</h2>
+    	</div>
+    				<form class="w3-container w3-card-4 w3-light-grey"  action="" method="POST">
+    					<input class="w3-input w3-border w3-round" type="text" placeholder="Search ssnid" name="ssnid" >
+    					<input class="w3-green w3-button w3-round" type="submit" value="Search">
+    				</form>
+
+    	{% if flag %}			
+			<form class="w3-container w3-card-4 w3-light-grey" action="" type="POST">
+
+				  
+				  <p> <span class="w3-text-red">* Mandatory</span> </p>
+
+				  <p>
+				  <label>Patient SSN ID</label>
+				  <input class="w3-input w3-border w3-round" name="ssnid" disabled="True" value="{{ data[''] }}" disabled="True"  type="text"></p>
+
+				   <p>
+				  <label>Patient Name</label>
+				  <input class="w3-input w3-border w3-round" name="patientName" value="{{ data[''] }}" disabled="True"  type="text"></p>
+				 
+				   <p>
+				  <label>Age</label>
+				  <input class="w3-input w3-border w3-round" name="age" value="{{ data[''] }}" disabled="True"  max="150" min="1" type="number"></p>
+
+				   <p>
+				  <label>Date of Admission</label>
+				  <input class="w3-input w3-border w3-round" name="dateOfAdmission" value="{{ data[''] }}" disabled="True"  type="text"></p>
+
+				  <p>
+				  <label>Type of bed</label>
+				  	<select class="w3-input" name="typeOfBed" disabled="True" value="{{ data[''] }}">
+							    <option value="generalward" {% if data['bed_room'] == 'generalWard' %} selected="True" {% endif %}>General ward</option>
+							    <option value="semiSharing" {% if data['bed_room'] == 'semiSharing' %} selected="True" {% endif %}>semi sharing</option>
+							    <option value="singleRoom" {% if data['bed_room'] == 'singleRoom' %} selected="True" {% endif %}>single room</option>
+							    
+  					</select></p>	
+
+				   <p>
+				  <label>Address</label>
+				  <input class="w3-input w3-border w3-round" name="first" value="{{ data[''] }}" disabled="True"  type="text"></p>
+
+				   <p>
+				  <label>State</label>
+				  <input class="w3-input w3-border w3-round" name="first" value="{{ data[''] }}" disabled="True"  type="text"></p>
+
+				   <p>
+				  <label>City</label>
+				  <input class="w3-input w3-border w3-round" name="first" value="{{ data[''] }}" disabled="True" type="text"></p>
+
+				    	 <br/>	<br/>
+   			</form>
+   		
+ 	
+{% endif %}
+  			
+ 		 </div>
+
+</div>
+
+
+
+{% endblock content %}
+
+
