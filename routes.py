@@ -319,11 +319,11 @@ def finalBilling():
                 noOfDays = dod-doj
 
                 if roomType == 'Single':
-                    billforRoom = noOfDays*8000
+                    billforRoom = (noOfDays.days)*8000
                 elif roomType == 'Semi':
-                    billforRoom = noOfDays*4000
+                    billforRoom = (noOfDays.days)*4000
                 else:
-                    billforRoom = noOfDays*2000
+                    billforRoom = (noOfDays.days)*2000
 
                 return render_template('finalBilling.html', data1=responce1, data2=responce2, data3=responce3, data4=noOfDays.days, data5=billforRoom, data6=responce5, data6=responce6, flag=True)
 
