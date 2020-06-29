@@ -3,6 +3,8 @@
 
 
 {% block content %}
+  {% if flag %}
+
 
 <div class="w3-container w3-tiny">
   <h3 class="w3-center">Pharmacy</h3>
@@ -19,18 +21,18 @@
       </tr>
     </thead>
     	<tr>
-        	<td>{{ data1['a'] }}</td>
-            <td>{{ data1['a'] }}</td>
-             <td>{{ data1['a'] }}</td>
-             <td>{{ data1['a'] }}</td>
-             <td>{{ data1['a'] }}</td>
-             <td>{{ data1['a'] }}</td>
+        	<td>{{ data1['ssnid'] }}</td>
+            <td>{{ data1['name'] }}</td>
+             <td>{{ data1['age'] }}</td>
+             <td>{{ data1['address'] }}</td>
+             <td>{{ data1['admission_date'] }}</td>
+             <td>{{ data1['bed'] }}</td>
         </tr>
  </table>
 </div>
 
 <div class="w3-container w3-tiny">
-  <h3 class="w3-center">Medicine Issued <span><a href="/issue_medicine?ssnid={{ data['a'] }}"> <button class="w3-green w3-small w3-button">ADD MORE </button> </a>
+  <h3 class="w3-center">Medicine Issued <span><a href="/issue_medicine?ssnid={{ data['ssnid'] }}"> <button class="w3-green w3-small w3-button">ADD MORE </button> </a>
 </span></h3>
   <table class="w3-table-all w3-hoverable">
     <thead>
@@ -48,10 +50,10 @@
               <tr>
                                        
                  
-                  <td>{{ data['a'] }}</td>
-                  <td>{{ data['a'] }}</td>
-                  <td>{{ data['a'] }}</td>
-                  <td>{{ data['a'] }}</td>
+                  <td>{{ data['mname'] }}</td>
+                  <td>{{ data['quantity'] }}</td>
+                  <td>{{ data['rate'] }}</td>
+                  <td>{{ int(data['quantity'])*float(data['rate']) }}</td>
 
               </tr>
 
@@ -68,7 +70,7 @@
         <th>Medicine</th>
         <th>Quantity</th>
         <th>Rate</th>
-        <th>Amount</th>
+      
       </tr>
     </thead>
       {% for data in data3 %}
@@ -76,16 +78,26 @@
               <tr>
                                        
                   
-                  <td>{{ data['a'] }}</td>
-                  <td>{{ data['a'] }}</td>
-                  <td>{{ data['a'] }}</td>
-                  <td>{{ data['a'] }}</td>
+                  <td>{{ data['mname'] }}</td>
+                  <td>{{ data['quantity' }}</td>
+                  <td>{{ data['rate'] }}</td>
+             
 
               </tr>
 
       {% endfor %}
  </table>
 </div>
+{% else %}
+
+  <div class="w3-card-4 w3-white w3-display-topmiddle" style="width: 50%;">
+
+<form class="w3-container w3-card-4 w3-light-grey"  action="get_patient_medicine_details" method="POST">
+              <input class="w3-input w3-border w3-round" type="text" placeholder="Search ssnid" name="ssnid" >
+              <input class="w3-green w3-button w3-round" type="submit" value="Search">
+            </form>
+</div>
+{% endif %}
 
 
 

@@ -19,11 +19,11 @@
           <button class="w3-button">Patient</button>
           <div class="w3-dropdown-content w3-bar-block w3-card-4">
             <a href="/create_patient" class="w3-bar-item w3-button">Create patient</a>
-            <a href="/update_patient" class="w3-bar-item w3-button">Update patient</a>
-            <a href="/delete_patient" class="w3-bar-item w3-button">Delete patient</a>
-            <a href="/view_all_patient" class="w3-bar-item w3-button">View All patient</a>
+            <a href="/pre_update_patient" class="w3-bar-item w3-button">Update patient</a>
+            <a href="/pre_delete_patient" class="w3-bar-item w3-button">Delete patient</a>
+            <a href="/view_all_patients" class="w3-bar-item w3-button">View All patient</a>
             <a href="/search_patient" class="w3-bar-item w3-button">Search patient</a>
-            <a href="/billing" class="w3-bar-item w3-button">Patient Billing</a>
+            <a href="/final_billing" class="w3-bar-item w3-button">Patient Billing</a>
           </div>
         </div>
          <div class="w3-dropdown-hover w3-col s2">
@@ -38,7 +38,7 @@
          <div class="w3-dropdown-hover w3-col s2">
           <button class="w3-button">Diagnostics</button>
           <div class="w3-dropdown-content w3-bar-block w3-card-4">
-            <a href="/get_patient_dignostic_details" class="w3-bar-item w3-button">Get Patient Details</a>
+            <a href="/get_patient_diagnostics_details" class="w3-bar-item w3-button">Get Patient Details</a>
           </div>
         </div>
           {% if 'userId' in session %}
@@ -60,7 +60,7 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                  <div class="w3-{{ category }}">
+                  <div class="w3-text-{{ category }}">
                       {{ message }}
                   </div>
                 {% endfor %}

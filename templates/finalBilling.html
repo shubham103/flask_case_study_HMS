@@ -1,11 +1,15 @@
- 
+  
 {% extends "layout.html" %}
 
 
 {% block content %}
 
+{% if flag %}
+
 <div class="w3-container w3-tiny">
   <h3 class="w3-center">Patient Billing</h3>
+
+  
 
   <table class="w3-table-all w3-hoverable">
     <thead>
@@ -19,12 +23,12 @@
       </tr>
     </thead>
       <tr>
-          <td>{{ data1['a'] }}</td>
-            <td>{{ data1['a'] }}</td>
-             <td>{{ data1['a'] }}</td>
-             <td>{{ data1['a'] }}</td>
-             <td>{{ data1['a'] }}</td>
-             <td>{{ data1['a'] }}</td>
+          <td>{{ data1['ssnid'] }}</td>
+            <td>{{ data1['namae'] }}</td>
+             <td>{{ data1['age'] }}</td>
+             <td>{{ data1['address'] }}</td>
+             <td>{{ data1['admission_date'] }}</td>
+             <td>{{ data1['bed'] }}</td>
         </tr>
  </table>
  <h4> No. of days : {{ days}}                  Billing for room : {{ room_rent }}</h4>
@@ -48,10 +52,11 @@
               <tr>
                                        
                  
-                  <td>{{ data['a'] }}</td>
-                  <td>{{ data['a'] }}</td>
-                  <td>{{ data['a'] }}</td>
-                  <td>{{ data['a'] }}</td>
+                 <td>{{ data['mname'] }}</td>
+                  <td>{{ data['quantity'] }}</td>
+                  <td>{{ data['rate'] }}</td>
+                  <td>{{ int(data['quantity'])*float(data['rate']) }}</td>
+
 
               </tr>
 
@@ -66,9 +71,7 @@
   <table class="w3-table-all w3-hoverable">
     <thead>
       <tr class="w3-green">
-        <th>Medicine</th>
-        <th>Quantity</th>
-        <th>Rate</th>
+        <th>Diagnostic</th>
         <th>Amount</th>
       </tr>
     </thead>
@@ -77,10 +80,9 @@
               <tr>
                                        
                   
-                  <td>{{ data['a'] }}</td>
-                  <td>{{ data['a'] }}</td>
-                  <td>{{ data['a'] }}</td>
-                  <td>{{ data['a'] }}</td>
+                  <td>{{ data['dname'] }}</td>
+                  <td>{{ data['amount'] }}</td>
+
 
               </tr>
 
@@ -91,7 +93,19 @@
 <br/>
 <form action="" method="POST" >
 	<input class="w3-green w3-button w3-round " type="submit"  name="submit" value="Confirm">
-	<label> Grant Totoal : {{ grant_total }}</label> 
+	<label> Grant Totoal : {{ float(diagnostic_bill) + float(pharmacy_bill) +  float(room_rent) }}</label> 
 </form>
 
+{% else %}
+
+  <div class="w3-card-4 w3-white w3-display-topmiddle" style="width: 50%;">
+
+<form class="w3-container w3-card-4 w3-light-grey"  action="/final_billing" method="POST">
+              <input class="w3-input w3-border w3-round" type="text" placeholder="Search ssnid" name="ssnid" >
+              <input class="w3-green w3-button w3-round" type="submit" value="Search">
+            </form>
+</div>
+{% endif %}
+
 {% endblock content %}
+ 

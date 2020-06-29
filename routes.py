@@ -104,8 +104,8 @@ def preUpdatePatient():
 
     elif request.method == 'GET':
         return render_template('updatePatient.html', flag=False)
-
-
+ 
+ 
 @app.route('/update_patient', methods=['POST'])
 @login_required
 def updatePatient():
@@ -267,7 +267,7 @@ def addDiagnostic():
     ssnid = int(request.args.get('ssnid'))
     if request.method == 'POST':
         if 'mname' in request.form and 'quantity' in request.form:
-            dname = request.form['mname']
+            dname = request.form['dname']
             amount = request.form['amount']
 
             if not db.isDiagnosticsAvailable(dname, amount):
@@ -325,11 +325,11 @@ def finalBilling():
                 else:
                     billforRoom = (noOfDays.days)*2000
 
-                return render_template('finalBilling.html', data1=responce1, data2=responce2, data3=responce3, data4=noOfDays.days, data5=billforRoom, data6=responce5, data6=responce6, flag=True)
+                return render_template('finalBilling.html', data1=responce1, data2=responce2, data3=responce3, days=noOfDays.days, room_rent=billforRoom, pharmacy_bill=responce5, diagnostic_bill=responce6, flag=True)
 
             else:
                 flash("Patient does not exist")
             return redirect(url_for('index'))
 
     elif request.method == 'GET':
-        return render_template('finalBilling.html')
+        return render_template('finalBilling.html',flag=False)

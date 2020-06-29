@@ -1,7 +1,7 @@
 from main import mysql
 from datetime import datetime
 
-def isUserExist(userId,password):
+def isUserExist(userId, password):
     cur = mysql.connection.cursor()
     res1 = cur.execute("SELECT username,password from userstore where username=%s and password=%s", (userId, password))
     mysql.connection.commit()
@@ -43,7 +43,7 @@ def createPatient(ssnid,name,age,admission_date, bed, address, city, state):
             if k == 'patient_id':
                 pid = v
                 break
-        res2 = cur.execute("""INSERT INTO getPatientStatus(ssnid,name,age,admission_date, bed, address, city, state) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)""",
+        res2 = cur.execute("""INSERT INTO patientstatus(ssnid,name,age,admission_date, bed, address, city, state) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)""",
                     (ssnid, name,age,admission_date, bed, address, city, state, pid, status, datetime.today().strftime('%Y-%m-%d')))
         l.append(True)
         l.append("")
