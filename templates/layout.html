@@ -42,7 +42,7 @@
           </div>
         </div>
           {% if 'userId' in session %}
-           <a class="w3-bar-item w3-button w3-col s2" href="{{ url_for('login') }}">Logout</a>
+           <a class="w3-bar-item w3-button w3-col s2" href="{{ url_for('logout') }}">Logout</a>
         {% else %}
            <a class="w3-bar-item w3-button w3-col s2" href="{{ url_for('login') }}">Login</a>
         {% endif %}   
