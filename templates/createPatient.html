@@ -13,7 +13,7 @@
      	<h2>Patient Registration</h2>
     	</div>
 
-			<form class="w3-container w3-card-4 w3-light-grey" action="" method="POST">
+			<form class="w3-container w3-card-4 w3-light-grey" action="/patient_registration" method="POST">
 
 				  
 				  <p> <span class="w3-text-red">* Mandatory</span> </p>
@@ -24,7 +24,7 @@
 
 				   <p>
 				  <label>Patient Name</label>
-				  <input class="w3-input w3-border w3-round" name="patientName"  required="true" type="text"></p>
+				  <input class="w3-input w3-border w3-round" name="name"  required="true" type="text"></p>
 				 
 				   <p>
 				  <label>Age</label>
@@ -32,11 +32,11 @@
 
 				   <p>
 				  <label>Date of Admission</label>
-				  <input class="w3-input w3-border w3-round" name="dateOfAdmission" required="true" type="date"></p>
+				  <input class="w3-input w3-border w3-round" name="admission" required="true" type="date"></p>
 
 				   <p>
 				  <label>Type of bed</label>
-				  	<select class="w3-input" name="typeOfBed" required="true">
+				  	<select class="w3-input" name="bed" required="true">
 							    <option value="generalward">General ward</option>
 							    <option value="semiSharing">semi sharing</option>
 							    <option value="singleRoom">single room</option>
@@ -45,15 +45,15 @@
 
 				   <p>
 				  <label>Address</label>
-				  <input class="w3-input w3-border w3-round" name="first" required="true" type="text"></p>
+				  <input class="w3-input w3-border w3-round" name="address" required="true" type="text"></p>
 
 				   <p>
 				  <label>State</label>
-				  <input class="w3-input w3-border w3-round" name="first" required="true" type="text"></p>
+				  <input class="w3-input w3-border w3-round" name="city" required="true" type="text"></p>
 
 				   <p>
 				  <label>City</label>
-				  <input class="w3-input w3-border w3-round" name="first" required="true"type="text"></p>
+				  <input class="w3-input w3-border w3-round" name="state" required="true"type="text"></p>
 
 				  <input class="w3-green w3-button w3-round " type="submit" name="submit" value="Create Patient"> 
    	 <br/>	<br/>
