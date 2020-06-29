@@ -60,7 +60,7 @@ def logout():
 
 @app.route('/patient_registration', methods=['GET', 'POST'])
 @login_required
-def patientRegistration():
+def createPatient():
     if request.method == 'POST':
         ssnid = request.form['ssnid']
         name = request.form['name']
@@ -73,20 +73,20 @@ def patientRegistration():
 
         if db.isPatientSsnidExist(ssnid):
             flash("Patient already exist", 'red')
-            return redirect(url_for("patientRegistration"))
+            return redirect(url_for("createPatient"))
 
-        response = db.patientRegistration(ssnid, name, age, admission, bed, address, city, state)
+        response = db.createPatient(ssnid, name, age, admission, bed, address, city, state)
 
         if response[0]:
             flash("Patient creation initiated successfully", 'green')
             return redirect(url_for("index"))
         else:
             flash(response[1], 'red')
-            return redirect(url_for("patientRegistration"))
+            return redirect(url_for("createPatient"))
 
 
     elif request.method == 'GET':
-        return render_template('patientRegistration.html')
+        return render_template('createPatient.html')
 
 
 @app.route('/pre_update_patient', methods=['GET', 'POST'])
@@ -113,17 +113,13 @@ def updatePatient():
         ssnid = request.form['ssnid']
         name = request.form['name']
         age = request.form['age']
-        admission = request.form['admission']
+        admission_date = request.form['admission']
         bed = request.form['bed']
         address = request.form['address']
         city = request.form['city']
         state = request.form['state']
 
-        # customerOldData = db.getCustomerSsnidDetils(ssnid)
-        # paste the old data in value parameter of form inputs and  make these fields as mandatory in form
-        # accountant should update the input field or let the old data written.
-
-        response = db.updatePatient(ssnid, name, age, admission, bed, address, city, state)
+        response = db.updatePatient(ssnid, name, age, admission_date, bed, address, city, state)
 
         if response[0]:
             flash("Patient updated successfully", 'green')
@@ -170,12 +166,12 @@ def deletePatient():
 
 
 #Patient Status
-@app.route('/view_all_patient', methods=['GET'])
+@app.route('/view_all_patients', methods=['GET'])
 @login_required
-def viewAllPatient():
+def viewAllPatients():
 	patient_data = db.getPatientStatus()
 	if patient_data[0]:
-		return render_template('viewAllPatient.html', patientData=patient_data[1])
+		return render_template('viewAllPatients.html', data=patient_data[1])
 	else:
 		flash(patient_data[1],'red')
 	return redirect(url_for('index'))
@@ -190,7 +186,7 @@ def searchPatient():
             ssnid = request.form['ssnid']
             if db.isPatientSsnidExist(ssnid):
                 patient_data = db.getPatientSsnidDetails(ssnid)
-                return render_template('searchPatient.html', pd=patient_data[0], flag=True)
+                return render_template('searchPatient.html', data=patient_data[0], flag=True)
             else:
                 return redirect(url_for('searchPatient'))
 
@@ -220,9 +216,9 @@ def getPatientMedicineDetails():
         return render_template('getPatientMedicineDetails.html', flag=False)
 
 
-@app.route('/issue_medicine', methods=['GET', 'POST'])
+@app.route('/issue_medicines', methods=['GET', 'POST'])
 @login_required
-def issueMedicine():
+def issueMedicines():
     ssnid = int(request.args.get('ssnid'))
     if request.method == 'POST':
         if 'mname' in request.form and 'quantity' in request.form:
@@ -231,7 +227,7 @@ def issueMedicine():
 
             if db.isMedicineAvailable(mname, quantity):
 
-                responce = db.issueMedicine(ssnid, mname, quantity) #Medicine quantity decrese and Patient_Medicine add row
+                responce = db.issueMedicines(ssnid, mname, quantity) #Medicine quantity decrese and Patient_Medicine add row
 
             if responce[0]:
                 flash("Successfully Assigned")
@@ -241,7 +237,7 @@ def issueMedicine():
             return redirect(url_for('index'))
 
     elif request.method == 'GET':
-        return render_template('issueMedicine.html')
+        return render_template('issueMedicines.html')
 
 #---------------------------------------------------Diagnostics
 
@@ -265,27 +261,31 @@ def getPatientDiagnosticsDetails():
         return render_template('getPatientDiagnosticsDetails.html', flag=False)
 
 
-@app.route('/add_diagnostics', methods=['GET', 'POST'])
+@app.route('/add_diagnostic', methods=['GET', 'POST'])
 @login_required
-def addDiagnostics():
+def addDiagnostic():
     ssnid = int(request.args.get('ssnid'))
     if request.method == 'POST':
         if 'mname' in request.form and 'quantity' in request.form:
             dname = request.form['mname']
             amount = request.form['amount']
 
-            if db.isDiagnosticsAvailable(dname, amount):
-                responce = db.addDiagnostics(ssnid, dname, amount)
+            if not db.isDiagnosticsAvailable(dname, amount):
+                responce = db.addDiagnostic(ssnid, dname, amount)
 
-            if responce[0]:
-                flash("Successfully Assigned")
-                return redirect(url_for('getPatientDiagnosticsDetails'))
+                if responce[0]:
+                    flash("Successfully Assigned")
+                    return redirect(url_for('getPatientDiagnosticsDetails'))
+                else:
+                    flash(responce[1], 'red')
+                return redirect(url_for('index'))
+
             else:
-                flash(responce[1], 'red')
+                flash("Diagnostic already Available")
             return redirect(url_for('index'))
 
     elif request.method == 'GET':
-        return render_template('addDiagnostics.html')
+        return render_template('addDiagnostic.html')
 
 #--------------------------------------------------------------Billing
 
@@ -298,27 +298,25 @@ def finalBilling():
 
             if db.isPatientSsnidExist(ssnid):
 
-                noOfDays=0
-
                 responce1 = db.getPatientSsnidDetails(ssnid)
                 responce2 = db.getPatientMedicineDetails(ssnid)
                 responce3 = db.getPatientDiagnosticsDetails(ssnid)
                 responce4 = db.dischargePatient(ssnid)
+                responce5 = db.getSumOfPatientMedicineDetails(ssnid)
+                responce6 = db.getSumOfPatientDiagnosticsDetails(ssnid)
 
                 for k, v in responce1.items():
                     if k == 'DOJ':
-                        doj = int(v[:2])
+                        doj = v
                     if k == 'DOD':
-                        dod = int(v[:2])
+                        dod = v
                     if k == 'Room_type':
                         roomType = v
 
-                for i in range(5000):
-                    if doj!=dod:
-                        noOfDays+=1
-                        doj+=1
-                    if doj==dod:
-                        break
+                doj = datetime.strptime(doj, '%d-%m-%Y')
+                dod = datetime.strptime(dod, '%d-%m-%Y')
+
+                noOfDays = dod-doj
 
                 if roomType == 'Single':
                     billforRoom = noOfDays*8000
@@ -327,13 +325,10 @@ def finalBilling():
                 else:
                     billforRoom = noOfDays*2000
 
-                return render_template('getPatientDiagnosticsDetails.html', data1=responce1, data2=responce2, data3=responce3, flag=True)
+                return render_template('finalBilling.html', data1=responce1, data2=responce2, data3=responce3, data4=noOfDays.days, data5=billforRoom, data6=responce5, data6=responce6, flag=True)
 
-            if responce[0]:
-                flash("Successfully Discharged")
-                return redirect(url_for('finalBilling'))
             else:
-                flash(responce[1], 'red')
+                flash("Patient does not exist")
             return redirect(url_for('index'))
 
     elif request.method == 'GET':
