@@ -254,13 +254,13 @@ def getPatientDiagnosticsDetails():
                 responce1 = db.getPatientSsnidDetails(ssnid)
                 responce2 = db.getPatientDiagnosticsDetails(ssnid)
                 responce3 = db.getDiagnosticsDetails()
-                return render_template('getPatientDiagnosticsDetails.html', data1=responce1, data2=responce2, data3=responce3, flag=True)
+                return render_template('getPatientDiagnosticDetails.html', data1=responce1, data2=responce2, data3=responce3[1], flag=True)
             else:
                 flash("Patient doesnot exist", 'red')
             return redirect(url_for('index'))
 
     elif request.method == 'GET':
-        return render_template('getPatientDiagnosticsDetails.html', flag=False)
+        return render_template('getPatientDiagnosticDetails.html', flag=False)
 
 
 @app.route('/add_diagnostic', methods=['GET', 'POST'])
@@ -277,7 +277,7 @@ def addDiagnostic():
 
                 if responce[0]:
                     flash("Successfully Assigned")
-                    return redirect(url_for('getPatientDiagnosticsDetails'))
+                    return redirect(url_for('getPatientDiagnosticDetails'))
                 else:
                     flash(responce[1], 'red')
                 return redirect(url_for('index'))
@@ -308,24 +308,23 @@ def finalBilling():
                 responce6 = db.getSumOfPatientDiagnosticsDetails(ssnid)
 
                 for k, v in responce1.items():
-                    if k == 'DOJ':
+                    if k == 'admission_date':
                         doj = v
-                    if k == 'DOD':
-                        dod = v
-                    if k == 'Room_type':
+                    if k == 'bed':
                         roomType = v
 
                 doj = datetime.strptime(doj, '%d-%m-%Y')
+                dod = datetime.today().strftime('%d-%m-%Y')
                 dod = datetime.strptime(dod, '%d-%m-%Y')
 
                 noOfDays = dod-doj
 
                 if roomType == 'Single':
-                    billforRoom = (noOfDays.days)*8000
+                    billforRoom = noOfDays.days*8000
                 elif roomType == 'Semi':
-                    billforRoom = (noOfDays.days)*4000
+                    billforRoom = noOfDays.days*4000
                 else:
-                    billforRoom = (noOfDays.days)*2000
+                    billforRoom = noOfDays.days*2000
 
                 return render_template('finalBilling.html', data1=responce1, data2=responce2, data3=responce3, days=noOfDays.days, room_rent=billforRoom, pharmacy_bill=responce5, diagnostic_bill=responce6, flag=True)
 

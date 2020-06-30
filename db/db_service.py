@@ -35,7 +35,7 @@ def createPatient(ssnid,name,age,admission_date, bed, address, city, state):
     else:
         fee=0
         status = "Active"
-        res2=cur.execute("""INSERT INTO patient(ssnid, name, age, admission_date, bed, address, city, state, status,fee) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""", (ssnid,name,age,datetime.today().strftime('%Y-%m-%d'), bed, address, city, state,status,fee))
+        res2=cur.execute("""INSERT INTO patient(ssnid, name, age, admission_date, bed, address, city, state, status,fee) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""", (ssnid,name,age,datetime.today().strftime('%d-%m-%Y'), bed, address, city, state,status,fee))
         mysql.connection.commit()
         cur.close()
         if res2>0:
@@ -110,12 +110,12 @@ def patient(ssnid):
 
 def isMedicineAvailable(mname,quantity):
     cur = mysql.connection.cursor()
-    res1 = cur.execute("SELECT * from medicinemaster where med_name=%s", mname)
-    res2 = cur.execute("SELECT qty from medicines where med_name=%s", mname)
+    res1 = cur.execute("SELECT * from medicinemaster where mname=%s", mname)
+    res2 = cur.execute("SELECT quantity from medicinemaster where mname=%s", mname)
     mysql.connection.commit()
     cur.close()
     if res1 >= 1:
-        if res2 <= qty:
+        if res2 <= quantity:
             return True
         else:
             return False
@@ -125,7 +125,7 @@ def isMedicineAvailable(mname,quantity):
         
 def issueMedicine(ssnid, mname, quantity):
     cur = mysql.connection.cursor()
-    res1 = cur.execute("SELECT * FROM medicineissued where med_name=%s", mname)
+    res1 = cur.execute("SELECT * FROM medicineissued where mname=%s", mname)
     l=[]
     if res1 >= 1:
         """
@@ -135,11 +135,16 @@ def issueMedicine(ssnid, mname, quantity):
                 bal = v
                 break
                 """
-        bal = cur.execute("SELECT qty FROM medicineissued where med_name=%s", mname)
+        res2 = cur.execute("SELECT quantity,rate FROM medicinemaster where mname=%s", mname)
+        for k,v in bal:
+            if k=='quantity':
+                bal=v
+            if k=='rate':
+                rate=v
         if bal>=int(quantity):
-            cur.execute("Update medicineissued SET qty=qty-%s where med_name=%s", (int(quantity), mname))
-            total_amount = cur.execute("SELECT amount FROM medicinemaster WHERE med_name=%s",mname)
-            cur.execute("Update patient SET fee=%s*%s where ssnid=%s", (int(quantity), int(total_amount), ssnid))
+            cur.execute("INSERT INTO medicineissued(ssnid,mname,quantity,rate) VALUES(%s,%s,%s,%s)",(ssnid,mname,quantity,int(quantity)*int(rate)))
+            cur.execute("UPDATE medicinemaster SET quantity=quantity-%s where mname=%s", (int(quantity), mname))
+            total_amount = cur.execute("SELECT rate FROM medicinemaster WHERE mname=%s",mname)
             mysql.connection.commit()
             cur.close()
             l.append(True)
@@ -160,9 +165,9 @@ def issueMedicine(ssnid, mname, quantity):
         l.append(error_msg)
         return l
 
-def getPatientMedicinesDetails(ssnid):
+def getPatientMedicineDetails(ssnid):
     cur = mysql.connection.cursor()
-    res1 = cur.execute("SELECT * FROM medicineissued where pat_id= %s", ssnid)
+    res1 = cur.execute("SELECT * FROM medicineissued where ssnid= %s", ssnid)
     l = []
     if res1 >= 1:
         res2 = cur.fetchall()
@@ -179,31 +184,21 @@ def getPatientMedicinesDetails(ssnid):
         return l
     
     
-def getMedicinesDetails(ssnid):
+def getMedicineDetails():
     cur = mysql.connection.cursor()
-    res1 = cur.execute("SELECT * FROM medicinemaster where med_id=%s ",ssnid)
+    res1 = cur.execute("SELECT * FROM medicinemaster")
     res2 = cur.fetchall()
     mysql.connection.commit()
     cur.close()
-    l = []
     if res1 >= 1:
-        
-        
-        l.append(True)
-        l.append(res2)
-        
-        return l
+        return res2
     else:
-        error_msg = "No Medicine exist"
-        l.append(False)
-        l.append(error_msg)
-        
-        return l
+        return False
     
     
 def getDiagnosticsDetails():
     cur = mysql.connection.cursor()
-    res1 = cur.execute("SELECT * FROM diagnosticsmaster ")
+    res1 = cur.execute("SELECT * FROM diagnosticsmaste")
     res2 = cur.fetchall()
     mysql.connection.commit()
     cur.close()
@@ -219,9 +214,9 @@ def getDiagnosticsDetails():
         return l
     
     
-def isDiagnosticsAvailable(dname,amount):
+def isDiagnosticsAvailable(dname,rate):
     cur = mysql.connection.cursor()
-    res1 = cur.execute("SELECT * from diagnosticsmaster where test_name=%s", dname)
+    res1 = cur.execute("SELECT * from diagnosticsmaster where dname=%s", dname)
     mysql.connection.commit()
     cur.close()
     if res1 >= 1:
@@ -229,24 +224,35 @@ def isDiagnosticsAvailable(dname,amount):
     else:
         return False
     
-
-    
-def addDiagnostics(ssnid, dname, amount):
+def getPatientDiagnosticsDetails(ssnid):
     cur = mysql.connection.cursor()
-    res3 = cur.execute("SELECT test_id from diagnostics where pat_id=%s", ssnid)
-    if res3 >= 1:
-        """
-        msg = "Customer Successfully Updated"
-        status = "Active"
-        val = cur.fetchall()
-        for k, v in val[0].items():
-            if k == 'pat_id':
-                cid = v
-                break
-        """
-        res1 = cur.execute("INSERT INTO diagnosticsmaster SET test_name=%s, test_amount = %s where test_id=%s", (dname, damount, res3))
+    res1 = cur.execute("SELECT * FROM diagnostics where ssnid= %s", ssnid)
+    l = []
+    if res1 >= 1:
+        res2 = cur.fetchall()
         mysql.connection.commit()
-        res2 = cur.execute("Update patient SET fee = fee + %s where ssnid=%s", (cid, ssnid))
+        l.append(True)
+        l.append(res2)
+        cur.close()
+        return l
+    else:
+        error_msg = "No Customer exist"
+        l.append(False)
+        l.append(error_msg)
+        cur.close()
+        return l
+    
+def addDiagnostics(ssnid, dname):
+    cur = mysql.connection.cursor()
+    res3 = cur.execute("SELECT * from diagnostics where ssnid=%s", ssnid)
+    if res3 >= 1:
+        
+        res2 = cur.execute("SELECT amount FROM diagnostics where ssnid=%s", ssnid)
+        for k,v in bal:
+            if k=='amount':
+                amount=v
+
+        res1 = cur.execute("INSERT INTO diagnostics(ssnid, dname, amount) VALUES (%s,%s,%s)", (ssnid, dname, amount))
         mysql.connection.commit()
         cur.close()
         l=[]
@@ -260,24 +266,13 @@ def addDiagnostics(ssnid, dname, amount):
         l.append(error_msg)
         return l
 
-    
-    
-    
 def dischargePatient(ssnid):
     cur = mysql.connection.cursor()
     res3 = cur.execute("SELECT * from patient where ssnid=%s", ssnid)
     if res3 >= 1:
-        msg = "Customer Successfully Discharged"
         status = "Discharged"
-        val = cur.fetchall()
-        
-        for k, v in val[0].items():
-            if k == 'ssn':
-                cid = v
-                break
         res1 = cur.execute("Update patient SET status=%s where ssnid=%s", (status, ssnid))
         mysql.connection.commit()
-       
         cur.close()
         l=[]
         if res1 >= 1:
@@ -290,27 +285,16 @@ def dischargePatient(ssnid):
         l.append(error_msg)
         return l
 
-    
-def getSumOfPatientMedicinesDetails(ssnid):
+def getSumOfPatientMedicineDetails(ssnid):
     n=0
     l=[]
     cur = mysql.connection.cursor()
-    res3 = cur.execute("SELECT med_name from medicineissued where pat_id=%s",ssnid)
+    res3 = cur.execute("SELECT sum(rate) from medicineissued where ssnid=%s",ssnid)
     val = cur.fetchall()
-    
-    for k, v in val[0].items():
-            if k == 'pat_id':
-                l.append('med_name')
-    res1 = 0            
-    for i in l:
-        price= cur.execute("SELECT amount from medicinemaster where med_name = %s",i)
-        qty_for_patient= cur.execute("SELECT qty from medicineissued where med_name = %s",i)
-        res1 = qty_for_patient * price
-    #res1 = cur.execute("SELECT SUM(fee) from patient where ssnid=%s", ssnid)
-    if res1 >= 1:
+    if res3 >= 1:
         mysql.connection.commit()
         cur.close()
-        return res1
+        return val
     else:
         error_msg="Patient is not found"
         l.append(False)
@@ -322,26 +306,14 @@ def getSumOfPatientDiagnosticsDetails(ssnid):
     n=0
     l=[]
     cur = mysql.connection.cursor()
-    res3 = cur.execute("SELECT test_id from diagnostics where pat_id=%s",ssnid)
+    res3 = cur.execute("SELECT sum(amount) from diagnostics where ssnid=%s",ssnid)
     val = cur.fetchall()
-    
-    for k, v in val[0].items():
-            if k == 'pat_id':
-                l.append('test_id')
-    res1 = 0            
-    for i in l:
-        price= cur.execute("SELECT test_amount from diagnosticsmaster where test_id = %s",i)
-        
-        res1 = res1 + price
-    #res1 = cur.execute("SELECT SUM(fee) from patient where ssnid=%s", ssnid)
-    if res1 >= 1:
-        mysql.connection.commit()
-        cur.close()
-        return res1
+    mysql.connection.commit()
+    cur.close()
+    if res3>=1:
+        return val
     else:
         error_msg="Patient is not found"
         l.append(False)
         l.append(error_msg)
         return l
-    
-    
