@@ -46,7 +46,7 @@ CREATE TABLE `patient` (
 -- Dumping data for table `patient`
 --
 
-INSERT INTO `patient` (`ws_ssn`, `ws_pat_id`, `ws_pat_name`, `ws_age`, `ws_doj`, `ws_rtype`, `ws_adrs`, `ws_city`, `ws_state`, status) VALUES
+INSERT INTO `patient` (`ws_ssn`, `ws_pat_id`, `ws_pat_name`, `ws_age`, `ws_doj`, `ws_rtype`, `ws_adrs`, `ws_city`, `ws_state`, 'status') VALUES
 (1, 1, 'Shubham', 22, '2020-06-1', 3, , 'South DCosta', 'milan' , 'MP','Active'),
 (1, 1, 'Corona', 22, '2020-01-1', 3, , 'Bat Colony', 'Wuhan' , 'MH','Active'),;
 
