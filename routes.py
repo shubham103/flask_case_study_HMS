@@ -58,7 +58,7 @@ def logout():
 
 #---------------------------------------------------------------------------------customer related
 
-@app.route('/patient_registration', methods=['GET', 'POST'])
+@app.route('/create_patient', methods=['GET', 'POST'])
 @login_required
 def createPatient():
     if request.method == 'POST':
@@ -97,7 +97,7 @@ def preUpdatePatient():
             ssnid = request.form['ssnid']
             if db.isPatientSsnidExist(ssnid):
                 patient_data = db.getPatientSsnidDetails(ssnid)
-                return render_template("updatePatient.html", data=patient_data[0], flag=True)
+                return render_template("updatePatient.html", data=patient_data, flag=True)
             else:
                 flash("Patient does not exist", 'red')
                 return redirect(url_for('preUpdatePatient'))
@@ -138,7 +138,7 @@ def preDeletePatient():
             ssnid = request.form['ssnid']
             if db.isPatientSsnidExist(ssnid):
                 patient_data = db.getPatientSsnidDetails(ssnid)
-                return render_template('deletePatient.html', data=patient_data[0], flag=True)
+                return render_template('deletePatient.html', data=patient_data, flag=True)
             else:
                 flash("Patient does not exist", 'red')
                 return redirect(url_for('preDeletePatient'))
@@ -154,8 +154,10 @@ def deletePatient():
 
         if 'ssnid' in request.form:
             ssnid = request.form['ssnid']
+            print("#######################################################",ssnid)
 
             response = db.deletePatient(ssnid)
+            print("#######################################################",response)
 
             if response[0]:
                 flash("Patient deleted successfully", 'green')
@@ -186,7 +188,7 @@ def searchPatient():
             ssnid = request.form['ssnid']
             if db.isPatientSsnidExist(ssnid):
                 patient_data = db.getPatientSsnidDetails(ssnid)
-                return render_template('searchPatient.html', data=patient_data[0], flag=True)
+                return render_template('searchPatient.html', data=patient_data, flag=True)
             else:
                 return redirect(url_for('searchPatient'))
 

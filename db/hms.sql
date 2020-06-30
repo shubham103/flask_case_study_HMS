@@ -39,16 +39,11 @@ CREATE TABLE `patient` (
   `ws_city` varchar(20) NOT NULL,
   `ws_state` varchar(20) NOT NULL,
   `status` text NOT NULL,
-  'fee' int(5) DEFAULT NULL
+  `fee` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `patient`
---
 
-INSERT INTO `patient` (`ws_ssn`, `ws_pat_id`, `ws_pat_name`, `ws_age`, `ws_doj`, `ws_rtype`, `ws_adrs`, `ws_city`, `ws_state`, 'status') VALUES
-(1, 1, 'Shubham', 22, '2020-06-1', 3, , 'South DCosta', 'milan' , 'MP','Active'),
-(1, 1, 'Corona', 22, '2020-01-1', 3, , 'Bat Colony', 'Wuhan' , 'MH','Active'),;
+
 
 -- --------------------------------------------------------
 
@@ -63,13 +58,7 @@ CREATE TABLE `medicineissued` (
   `ws_qty` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `medicineissued`
---
 
-INSERT INTO `medicineissued` (`ws_pat_id`, `ws_med_name`, `ws_qty`) VALUES
-(1,'Coronil',12),
-(2,'HydroChloroquine',5);
 
 -- --------------------------------------------------------
 --
@@ -83,13 +72,6 @@ CREATE TABLE `medicinemaster` (
   `ws_amount` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `medicinemaster`
---
-
-INSERT INTO `medicinemaster` (`ws_med_id`, `ws_med_name`, `ws_qty`, 'ws_amount') VALUES
-(1,'Coronil',12,600),
-(2,'HydroChloroquine',5,106);
 
 -- --------------------------------------------------------
 --
@@ -101,13 +83,6 @@ CREATE TABLE `diagnostics` (
   `ws_test_id` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `diagnostics`
---
-
-INSERT INTO `diagnostics` (`ws_pat_id`, `ws_test_id`) VALUES
-(1, 12),
-(2, 6);
 
 
 -- --------------------------------------------------------
@@ -117,19 +92,9 @@ INSERT INTO `diagnostics` (`ws_pat_id`, `ws_test_id`) VALUES
 
 CREATE TABLE `diagnosticsmaster` (
   `ws_test_id` int(9) NOT NULL,
-  'ws_test_name' text NOT NULL,
-  'ws_test_amount' int(5) NOT NULL
+  `ws_test_name` text NOT NULL,
+  `ws_test_amount` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `diagnostics`
---
-
-INSERT INTO `diagnosticsmaster` (`ws_test_id`, `ws_test_name`, 'ws_test_amount') VALUES
-(1, 'noval' , 4500),
-(2, 'detrix', 650);
-
--- --------------------------------------------------------
 
 
 
@@ -144,23 +109,13 @@ CREATE TABLE `userstore` (
   `password` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `userstore`
---
 
-INSERT INTO `userstore` (`username`, `password`) VALUES
-('shubham', 'shubham@123');
 
 --
 -- Indexes for dumped tables
 --
 
---
--- Indexes for table `account`
---
-ALTER TABLE `account`
-  ADD PRIMARY KEY (`Account_ID`),
-  ADD UNIQUE KEY `Account_ID` (`Account_ID`);
+
 
 --
 -- Indexes for table `medicineissued`
