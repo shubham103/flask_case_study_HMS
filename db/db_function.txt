@@ -31,3 +31,84 @@
 16. getSumOfPatientMedicineDetails(ssnid) --> Use sum() and give sum of PatientMedicine Details and return data or 0
 
 17. getSumOfPatientDiagnosticsDetails(ssnid) --> Use sum() and give sum of Patient Diangnostics Details and return data or 0
+
+
+
+
+===============================================================
+
+
+
+
+# from main import mysql
+from datetime import datetime
+
+def isUserExist(userId, password):
+    return True
+        
+def isPatientSsnidExist(ssnid):
+    return True
+        
+def createPatient(ssnid,name,age,admission_date, bed, address, city, state):
+    return [True, ""]
+
+def getPatientSsnidDetails(ssnid):
+    return {'ssnid':"123", "name":"shubham","age":"23","admission_date":"20-03-2020","bed":"single_bed","address":"b-55","city":"bhopal","state":"mp","status":"Active"}
+        
+        
+def deletePatient(ssnid):
+    return [True, ""]     
+        
+        
+def getPatientStatus():
+    return [True,({'ssnid':"123", "name":"shubham","age":"23","admission_date":"20-03-  2020","bed":"single_bed","address":"b-55","city":"bhopal","state":"mp","status":"Active"},{'ssnid':"123", "name":"shubham","age":"23","admission_date":"20/03/2020","bed":"single_bed","address":"b-55","city":"bhopal","state":"mp","status":"Active"},{'ssnid':"123", "name":"shubham","age":"23","admission_date":"20/03/2020","bed":"single_bed","address":"b-55","city":"bhopal","state":"mp","status":"Active"})]
+
+def patient(ssnid):
+    return True
+
+def issueMedicines(ssnid, mname, quantity):
+    return [True,""]
+
+def updatePatient(ssnid, name, age, admission_date, bed, address, city, state):
+    return [True,""]
+
+def isMedicineAvailable(mname,quantity):
+    return True
+        
+        
+def issueMedicine(ssnid, mname, quantity):
+    return [True,""]
+
+def getPatientMedicineDetails(ssnid):
+    return [{"mname":"sfadsf","quantity":"10","rate":"1000"},{"mname":"sfadsf","quantity":"10","rate":"1000"},{"mname":"sfadsf","quantity":"10","rate":"1000"}]
+    
+    
+def getMedicineDetails():
+    return [{"mname":"sfadsf","quantity":"10","rate":"1000"},{"mname":"sfadsf","quantity":"10","rate":"1000"},{"mname":"sfadsf","quantity":"10","rate":"1000"}]
+    
+    
+def getDiagnosticsDetails():
+    return [{"dname":"dsfadf","amount":"34534"},{"dname":"dsfadf","amount":"34534"},{"dname":"dsfadf","amount":"34534"}]
+    
+    
+def isDiagnosticsAvailable(dname):
+    return [True,""]
+    
+def getPatientDiagnosticsDetails(ssnid):
+    return [{"dname":"dsfadf","amount":"34534"},{"dname":"dsfadf","amount":"34534"},{"dname":"dsfadf","amount":"34534"}]
+    
+def addDiagnostics(ssnid, dname):
+    return True
+
+def dischargePatient(ssnid):
+    return True
+
+def getSumOfPatientMedicineDetails(ssnid):
+    return 450
+    
+ 
+def getSumOfPatientDiagnosticsDetails(ssnid):
+    return 556
+
+def addDiagnostic(ssnid, dname, amount):
+    return [True,""]

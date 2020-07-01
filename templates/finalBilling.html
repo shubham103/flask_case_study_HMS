@@ -55,7 +55,7 @@
                  <td>{{ data['mname'] }}</td>
                   <td>{{ data['quantity'] }}</td>
                   <td>{{ data['rate'] }}</td>
-                  <td>{{ int(data['quantity'])*float(data['rate']) }}</td>
+                  <td>{{ (data['quantity']|int)*(data['rate']|float) }}</td>
 
 
               </tr>
@@ -93,23 +93,23 @@
 <br/>
 <form action="" method="POST" >
 	<input class="w3-green w3-button w3-round " type="submit"  name="submit" value="Confirm">
-	<label> Grant Totoal : {{ float(diagnostic_bill) + float(pharmacy_bill) +  float(room_rent) }}</label> 
+	<label> Grant Totoal : {{ (diagnostic_bill)|float + (pharmacy_bill)|float +  (room_rent)|float }}</label> 
 </form>
 
 {% else %}
+
 <div class="w3-container w3-display-container">
-
-    <div class="w3-container w3-center w3-green">
-      <h2>Final Billing</h2>
-
   <div class="w3-card-4 w3-white w3-display-topmiddle" style="width: 50%;">
+    <div class="w3-container w3-center w3-green">
+      <h2>Find Patient</h2>
+    </div>
 
-<form class="w3-container w3-card-4 w3-light-grey"  action="/final_billing" method="POST">
+    <form class="w3-container w3-card-4 w3-light-grey"  action="/final_billing" method="POST">
               <input class="w3-input w3-border w3-round" type="text" placeholder="Search ssnid" name="ssnid" >
               <input class="w3-green w3-button w3-round" type="submit" value="Search">
-            </form>
-</div>
+    </form>
+  </div>
 </div>
 {% endif %}
 
-{% endblock content %}
+{% endblock content %} 

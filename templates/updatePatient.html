@@ -3,7 +3,7 @@
 {% block content %}
 
 
-
+ 
 
 <div class="w3-container w3-display-container">
  
@@ -12,20 +12,20 @@
     <div class="w3-container w3-center w3-green">
      	<h2>Update Patient Details</h2>
     	</div>
-    				<form class="w3-container w3-card-4 w3-light-grey"  action="" method="POST">
+    				<form class="w3-container w3-card-4 w3-light-grey"  action="/pre_update_patient" method="POST">
     					<input class="w3-input w3-border w3-round" type="text" placeholder="Search ssnid" name="ssnid" >
     					<input class="w3-green w3-button w3-round" type="submit" value="Search">
     				</form>
 
     	{% if flag %}			
-			<form class="w3-container w3-card-4 w3-light-grey" action="" type="POST">
+			<form class="w3-container w3-card-4 w3-light-grey" action="/update_patient" method="POST">
  
 				  
 				  <p> <span class="w3-text-red">* Mandatory</span> </p>
 
 				  <p>
 				  <label>Patient SSN ID</label>
-				  <input class="w3-input w3-border w3-round" name="ssnid" disabled="True" value="{{ data['ssnid'] }}" required="true" type="text"></p>
+				  <input class="w3-input w3-border w3-round" name="ssnid"  value="{{ data['ssnid'] }}" required="true" type="text"></p>
 
 				   <p>
 				  <label>Patient Name</label>
@@ -37,7 +37,7 @@
 
 				   <p>
 				  <label>Date of Admission</label>
-				  <input class="w3-input w3-border w3-round" name="admission" value="{{ data['admission_date'] }}" disabled="true" type="text"></p>
+				  <input class="w3-input w3-border w3-round" name="admission" value="{{ data['admission_date'] }}"  type="text"></p>
 
 				   <p>
 				  <label>Type of bed room</label>
