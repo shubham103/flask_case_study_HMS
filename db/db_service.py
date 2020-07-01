@@ -214,7 +214,7 @@ def getDiagnosticsDetails():
         return l
     
     
-def isDiagnosticsAvailable(dname,rate):
+def isDiagnosticsAvailable(dname):
     cur = mysql.connection.cursor()
     res1 = cur.execute("SELECT * from diagnosticsmaster where dname=%s", dname)
     mysql.connection.commit()
