@@ -347,4 +347,4 @@ def updatePatient(ssnid, name, age, admission_date, bed, address, city, state):
         error_msg = "No Patient exist with %s ID" % ssnid
         l.append(False)
         l.append(error_msg)
-        return l
+        return l 

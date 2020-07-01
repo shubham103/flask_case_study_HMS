@@ -275,14 +275,14 @@ def addDiagnostic():
         if db.isDiagnosticsAvailable(dname):
             responce = db.addDiagnostic(ssnid, dname)
             if responce[0]:
-                flash("Successfully Assigned")
+                flash("Successfully Assigned","green")
                 return redirect(url_for('getPatientDiagnosticsDetails'))
             else:
                 flash(responce[1], 'red')
                 return redirect(url_for('index'))
 
         else:
-            flash("Diagnostic not Available")
+            flash("Diagnostic not Available",'red')
             return redirect(url_for('index'))
 
     elif request.method == 'GET':
@@ -321,6 +321,10 @@ def finalBilling():
 
                 noOfDays = dod-doj
 
+                if noOfDays.days == 0:
+                    noOfDays=1
+
+
                 if roomType == 'Single':
                     billforRoom = noOfDays.days*8000
                 elif roomType == 'Semi':
@@ -331,7 +335,7 @@ def finalBilling():
                 return render_template('finalBilling.html', data1=responce1, data2=responce2[1], data3=responce3[1], days=noOfDays.days, room_rent=billforRoom, pharmacy_bill=tot_med, diagnostic_bill=tot_diag, flag=True)
 
             else:
-                flash("Patient does not exist")
+                flash("Patient does not exist",'red')
             return redirect(url_for('index'))
 
     elif request.method == 'GET':
