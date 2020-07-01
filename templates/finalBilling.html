@@ -24,7 +24,7 @@
     </thead>
       <tr>
           <td>{{ data1['ssnid'] }}</td>
-            <td>{{ data1['namae'] }}</td>
+            <td>{{ data1['name'] }}</td>
              <td>{{ data1['age'] }}</td>
              <td>{{ data1['address'] }}</td>
              <td>{{ data1['admission_date'] }}</td>
@@ -50,14 +50,10 @@
       {% for data in data2 %}
               
               <tr>
-                                       
-                 
                  <td>{{ data['mname'] }}</td>
                   <td>{{ data['quantity'] }}</td>
                   <td>{{ data['rate'] }}</td>
                   <td>{{ (data['quantity']|int)*(data['rate']|float) }}</td>
-
-
               </tr>
 
       {% endfor %}
@@ -91,10 +87,10 @@
  </table>
 </div>
 <br/>
-<form action="" method="POST" >
-	<input class="w3-green w3-button w3-round " type="submit"  name="submit" value="Confirm">
+<a href="/discharge?ssnid={{ data1['ssnid'] }}"><button class="w3-green w3-button w3-round ">Confirm</button></a>
+	<!-- <input class="w3-green w3-button w3-round " type="submit"  name="submit" value="Confirm"> -->
 	<label> Grant Totoal : {{ (diagnostic_bill)|float + (pharmacy_bill)|float +  (room_rent)|float }}</label> 
-</form>
+
 
 {% else %}
 
