@@ -11,7 +11,7 @@ app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 def index():
     return render_template('index.html')
 
-
+ 
 # ------------------------------------------------------------ login & logout
 
 def login_required(f):
@@ -154,10 +154,10 @@ def deletePatient():
 
         if 'ssnid' in request.form:
             ssnid = request.form['ssnid']
-            print("#######################################################",ssnid)
+            
 
             response = db.deletePatient(ssnid)
-            print("#######################################################",response)
+           
 
             if response[0]:
                 flash("Patient deleted successfully", 'green')
@@ -171,12 +171,13 @@ def deletePatient():
 @app.route('/view_all_patients', methods=['GET'])
 @login_required
 def viewAllPatients():
-	patient_data = db.getPatientStatus()
-	if patient_data[0]:
-		return render_template('viewAllPatients.html', data=patient_data[1])
-	else:
-		flash(patient_data[1],'red')
-	return redirect(url_for('index'))
+    patient_data = db.getPatientStatus()
+
+    if patient_data[0]:
+        return render_template('viewAllPatients.html', data=patient_data[1])
+    else:
+        flash(patient_data[1],'red')
+    return redirect(url_for('index'))
 
 
 #patient details
@@ -220,9 +221,9 @@ def getPatientMedicineDetails():
 
 @app.route('/issue_medicines', methods=['GET', 'POST'])
 @login_required
-def issueMedicines():
-    ssnid = int(request.args.get('ssnid'))
+def issueMedicine():
     if request.method == 'POST':
+        ssnid = int(request.args.get('ssnid'))
         if 'mname' in request.form and 'quantity' in request.form:
             mname = request.form['mname']
             quantity = request.form['quantity']
@@ -232,14 +233,15 @@ def issueMedicines():
                 responce = db.issueMedicines(ssnid, mname, quantity) #Medicine quantity decrese and Patient_Medicine add row
 
             if responce[0]:
-                flash("Successfully Assigned")
+                flash("Successfully Assigned",'green')
                 return redirect(url_for('getPatientMedicineDetails'))
             else:
                 flash(responce[1], 'red')
             return redirect(url_for('index'))
 
     elif request.method == 'GET':
-        return render_template('issueMedicines.html')
+        ssnid = int(request.args.get('ssnid'))
+        return render_template('issueMedicines.html',ssnid=ssnid)
 
 #---------------------------------------------------Diagnostics
 
@@ -254,7 +256,7 @@ def getPatientDiagnosticsDetails():
                 responce1 = db.getPatientSsnidDetails(ssnid)
                 responce2 = db.getPatientDiagnosticsDetails(ssnid)
                 responce3 = db.getDiagnosticsDetails()
-                return render_template('getPatientDiagnosticDetails.html', data1=responce1, data2=responce2, data3=responce3[1], flag=True)
+                return render_template('getPatientDiagnosticDetails.html', data1=responce1, data2=responce2, data3=responce3, flag=True)
             else:
                 flash("Patient doesnot exist", 'red')
             return redirect(url_for('index'))
@@ -268,26 +270,25 @@ def getPatientDiagnosticsDetails():
 def addDiagnostic():
     ssnid = int(request.args.get('ssnid'))
     if request.method == 'POST':
-        if 'mname' in request.form and 'quantity' in request.form:
-            dname = request.form['dname']
-            amount = request.form['amount']
+        ssnid = int(request.args.get('ssnid'))
+        dname = request.form['dname']
 
-            if not db.isDiagnosticsAvailable(dname, amount):
-                responce = db.addDiagnostic(ssnid, dname, amount)
-
-                if responce[0]:
-                    flash("Successfully Assigned")
-                    return redirect(url_for('getPatientDiagnosticDetails'))
-                else:
-                    flash(responce[1], 'red')
+        if not db.isDiagnosticsAvailable(dname):
+            responce = db.addDiagnostic(ssnid, dname)
+            if responce[0]:
+                flash("Successfully Assigned")
+                return redirect(url_for('getPatientDiagnosticDetails'))
+            else:
+                flash(responce[1], 'red')
                 return redirect(url_for('index'))
 
-            else:
-                flash("Diagnostic already Available")
+        else:
+            flash("Diagnostic already Available")
             return redirect(url_for('index'))
 
     elif request.method == 'GET':
-        return render_template('addDiagnostic.html')
+        ssnid = int(request.args.get('ssnid'))
+        return render_template('addDiagnostic.html',ssnid=ssnid)
 
 #--------------------------------------------------------------Billing
 
